@@ -279,6 +279,37 @@ function aiRespond(type) {
   chat.scrollTop = chat.scrollHeight;
 }
   
+function goHome() {
+  document.getElementById("main").innerHTML = `
+<h2>Welcome</h2>
+<p>
+Welcome to The Unknot Program.<br><br>
+This training system is designed to help reduce internal strain and improve clarity through structured thinking.<br><br>
+Independent thought can create strain. We help reduce that.<br><br>
+Most users begin with uncertainty. This is expected.
+</p>
+
+<div class="box">
+<b>Program Statement</b><br>
+Unknotting is what happens when you stop holding yourself together.
+</div>
+
+<div class="box">
+<b>Statistics</b>
+<ul>
+<li>98.7% of users reported improved clarity</li>
+<li>82% reduction in internal cognitive strain</li>
+<li>91% continued beyond initial hesitation</li>
+</ul>
+</div>
+
+<div class="box">
+<b>Join Program</b><br>
+<input type="text" placeholder="Enter Email">
+<button>Join</button>
+</div>
+`;
+}
 function showAbout() {
   document.getElementById("main").innerHTML = `<h2>About</h2><p>The Unknot Program helps reduce internal strain.</p>`;
 }
