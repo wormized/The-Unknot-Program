@@ -7,16 +7,16 @@
 <style>
 body {
   background-color: #000080;
-  font-family: "Times New Roman", serif;
+  font-family: Arial, sans-serif;
+  margin: 0;
 }
 
 #banner {
   background: linear-gradient(to right, #c0c0c0, #ffccff);
-  border: 3px outset white;
+  border-bottom: 3px solid black;
   padding: 10px;
   text-align: center;
-  font-size: 26px;
-  color: black;
+  font-size: 24px;
 }
 
 #container {
@@ -26,15 +26,14 @@ body {
 #sidebar {
   width: 180px;
   background: #c0c0c0;
-  border: 3px outset white;
+  border-right: 3px solid black;
   padding: 10px;
 }
 
 #main {
   flex: 1;
-  background: #fffff0;
-  border: 3px inset gray;
-  padding: 15px;
+  background: #f5f5dc;
+  padding: 20px;
 }
 
 .button {
@@ -51,78 +50,14 @@ body {
   background: #d0d0ff;
 }
 
-.box {
-  border: 2px inset gray;
-  padding: 10px;
-  margin-top: 10px;
-  background: #ffffff;
-}
-
-#assistant {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  width: 240px;
-  background: #c0c0c0;
-  border: 3px outset white;
-  font-size: 12px;
-}
-
-#assistant-header {
-  background: purple;
-  color: white;
-  padding: 3px;
-}
-
-#chat {
-  height: 120px;
-  overflow-y: auto;
-  background: white;
-  padding: 5px;
-}
-  
-.bubble {
-  background: #e0e0ff;
-  margin: 5px;
-  padding: 5px;
-  border-radius: 5px;
-}
-
-.option {
-  background: #e0e0e0;
-  margin: 3px;
-  padding: 3px;
-  cursor: pointer;
-  text-align: center;
-}
-
 .blink {
   animation: blink 1s infinite;
   color: red;
 }
-@keyframes blink {
-  50% { opacity: 0; }
-}
 
-#errorScreen {
-display: none;
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: #0000aa;
-color: white;
-font-family: monospace;
-padding: 40px;
-}
+@keyframes blink { 50% { opacity: 0; } }
 
-#errorScreen button {
-  margin-top: 20px;
-  padding: 10px;
-  font-size: 16px;
-}
-
+/* GOOGLE SLIDES STYLE */
 .slide-container {
   background: #ddd;
   padding: 20px;
@@ -162,6 +97,63 @@ padding: 40px;
   cursor: pointer;
 }
 
+#errorScreen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0000aa;
+  color: white;
+  font-family: monospace;
+  padding: 40px;
+}
+
+#errorScreen button {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#assistant {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 240px;
+  background: #c0c0c0;
+  border: 3px outset white;
+  font-size: 12px;
+}
+
+#assistant-header {
+  background: purple;
+  color: white;
+  padding: 3px;
+}
+
+#chat {
+  height: 120px;
+  overflow-y: auto;
+  background: white;
+  padding: 5px;
+}
+
+.bubble {
+  background: #e0e0ff;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.option {
+  background: #e0e0e0;
+  margin: 3px;
+  padding: 3px;
+  cursor: pointer;
+  text-align: center;
+}
+
 </style>
 </head>
 
@@ -177,7 +169,7 @@ THE UNKNOT PROGRAM<br>
 <div id="sidebar">
 <div class="button">Home</div>
 <div class="button">About</div>
-<div class="button" onclick="startLearning()"><span class="blink">NEW</span> Begin Learning</div>
+<div class="button" onclick="startSlides()"><span class="blink">NEW</span> Begin Learning</div>
 <div class="button">Progress</div>
 <div class="button" onclick="termsPage()">Terms</div>
 </div>
@@ -215,40 +207,28 @@ Unknotting is what happens when you stop holding yourself together.
 <button>Join</button>
 </div>
 
-</div>
+<div id="errorScreen">
+<h1>STOP: 0x00034F SYSTEM MISALIGNMENT</h1>
+<p>A problem has been detected and alignment has been shut down to prevent further instability.</p>
+<p>If this is the first time you have seen this error, restart the system.</p>
+<p>Technical information:<br>
+*** THOUGHT_OVERFLOW<br>
+*** USER_CONTINUED_BEYOND_LIMIT</p>
+<button onclick="restart()">RESTART</button>
 </div>
 
 <div id="assistant">
 <div id="assistant-header">Assist Unit</div>
-<div id="chat">Hello. I am Assist Unit.<br>Would you like help starting?</div>
-<div class="option" onclick="respond('yes')">Yes</div>
-<div class="option" onclick="respond('no')">Not now</div>
+<div id="chat"></div>
+<div class="option" onclick="aiRespond('start')">How do I start?</div>
+<div class="option" onclick="aiRespond('safe')">Is this safe?</div>
+<div class="option" onclick="aiRespond('leave')">Can I leave?</div>
+<div class="option" onclick="aiRespond('why')">Why am I here?</div>
 </div>
 
 <script>
 let slideIndex = 0;
-
-function respond(choice) {
-  let chat = document.getElementById("chat");
-
-  if (choice === 'yes') {
-    chat.innerHTML += "<br><br>Beginning is recommended. You are ready.";
-  } else {
-    chat.innerHTML += "<br><br>You may wait. Most do not.";
-  }
-}
-
-function startLearning() {
-  document.getElementById("main").innerHTML = `
-  <h2>Module 1: Understanding Thought</h2>
-  <p>
-  Thoughts can become disorganized when too many are held at once.<br><br>
-  Disorganization creates strain.<br><br>
-  Structure improves clarity.
-  </p>
-  <button onclick="startSlides()">Start Guided Alignment</button>
-  `;
-}
+let spam = 0;
 
 function startSlides() {
   slideIndex = 0;
@@ -257,67 +237,16 @@ function startSlides() {
 
 function showSlide() {
   const slides = [
+`<div class="slide-container"><div class="slide"><h2>Understanding Thought</h2><div class="slide-content"><div class="slide-text"><ul><li>Thoughts can become disorganized</li><li>Disorganization reduces clarity</li><li>Clarity improves outcomes</li></ul></div><img src="brain1.gif"></div><button class="nav-btn" onclick="nextSlide()">Next</button></div></div>`,
 
-`<div class="slide">
-<h2>Understanding Thought</h2>
-<img src="PUT_IMAGE_HERE">
-<ul>
-<li>Thoughts can become tangled</li>
-<li>Tangled thoughts reduce clarity</li>
-<li>Clarity is necessary for improvement</li>
-</ul>
-<button class="nav-btn" onclick="nextSlide()">Next</button>
-</div>`,
+`<div class="slide-container"><div class="slide"><h2>Reducing Strain</h2><div class="slide-content"><div class="slide-text"><ul><li>Too many thoughts create pressure</li><li>Pressure creates discomfort</li><li>Reducing thought reduces strain</li></ul></div><img src="brain2.gif"></div><button class="nav-btn" onclick="nextSlide()">Next</button></div></div>`,
 
-`<div class="slide">
-<h2>Reducing Strain</h2>
-<img src="PUT_IMAGE_HERE">
-<ul>
-<li>Multiple thoughts increase pressure</li>
-<li>Pressure creates discomfort</li>
-<li>Reducing thought reduces discomfort</li>
-</ul>
-<button class="nav-btn" onclick="nextSlide()">Next</button>
-</div>`,
+`<div class="slide-container"><div class="slide"><h2>Alignment</h2><div class="slide-content"><div class="slide-text"><ul><li>Aligned thinking is efficient</li><li>Aligned thinking is simple</li><li>You are learning alignment</li></ul></div><img src="organs.gif"></div><button class="nav-btn" onclick="nextSlide()">Next</button></div></div>`,
 
-`<div class="slide">
-<h2>Alignment</h2>
-<img src="PUT_IMAGE_HERE">
-<ul>
-<li>Aligned thinking is efficient</li>
-<li>Aligned thinking is simple</li>
-<li>You are learning alignment</li>
-</ul>
-<button class="nav-btn" onclick="nextSlide()">Next</button>
-</div>`,
-
-`<div class="slide">
-<h2>Progress</h2>
-<ul>
-<li>You continued</li>
-<li>You did not stop</li>
-<li>This indicates readiness</li>
-</ul>
-<button class="nav-btn" onclick="nextSlide()">Next</button>
-</div>`,
-
-`<div class="slide">
-<h2>Notice</h2>
-<ul>
-<li>You are still here</li>
-<li>You chose to continue</li>
-<li>This matters</li>
-</ul>
-<button class="nav-btn" onclick="nextSlide()">Continue</button>
-</div>`
-
+`<div class="slide-container"><div class="slide"><h2>Notice</h2><ul><li>You continued</li><li>You did not stop</li><li>This matters</li></ul><button class="nav-btn" onclick="triggerError()">Continue</button></div></div>`
 ];
 
-  if (slideIndex < slides.length) {
-    document.getElementById("main").innerHTML = slides[slideIndex];
-  } else {
-    crash();
-  }
+  document.getElementById("main").innerHTML = slides[slideIndex];
 }
 
 function nextSlide() {
@@ -325,23 +254,52 @@ function nextSlide() {
   showSlide();
 }
 
-function crash() {
-  document.getElementById("main").innerHTML = `
-  <h2>SYSTEM MISALIGNMENT DETECTED</h2>
-  <p>Too many active thoughts.</p>
-  <button onclick="realign()">REALIGN</button>
-  `;
+function triggerError() {
+  document.getElementById("container").style.display = "none";
+  document.getElementById("errorScreen").style.display = "block";
 }
 
-function realign() {
-  document.body.innerHTML = `<h1 style="color:red; text-align:center;">RESTART REQUIRED</h1>`;
+function restart() {
+  window.location.href = "second.html";
 }
 
 function termsPage() {
-  document.getElementById("main").innerHTML = `<p>${"accept ".repeat(500)}</p>`;
+  document.getElementById("main").innerHTML = "accept ".repeat(500);
 }
+
+function aiRespond(type) {
+  let chat = document.getElementById("chat");
+  spam++;
+
+  let response = "";
+
+  if (spam > 6) {
+    response = "You are repeating yourself.";
+  } else if (type === 'start') {
+    response = "Select Begin Learning.";
+  } else if (type === 'safe') {
+    response = "There is no risk in continuing.";
+  } else if (type === 'leave') {
+    response = "Leaving is not required.";
+  } else if (type === 'why') {
+    response = "You chose to be here.";
+  }
+
+  let bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.innerText = "...";
+  chat.appendChild(bubble);
+
+  setTimeout(() => {
+    bubble.innerText = response;
+  }, 700);
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
 
 </script>
 
 </body>
 </html>
+
