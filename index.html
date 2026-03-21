@@ -7,16 +7,16 @@
 <style>
 body {
   background-color: #000080;
-  font-family: Arial, sans-serif;
+  font-family: Verdana, Arial, sans-serif;
   margin: 0;
 }
 
 #banner {
   background: linear-gradient(to right, #c0c0c0, #ffccff);
-  border-bottom: 3px solid black;
-  padding: 10px;
+  border-bottom: 4px ridge white;
+  padding: 12px;
   text-align: center;
-  font-size: 24px;
+  font-size: 26px;
 }
 
 #container {
@@ -24,30 +24,26 @@ body {
 }
 
 #sidebar {
-  width: 180px;
+  width: 200px;
   background: #c0c0c0;
-  border-right: 3px solid black;
+  border-right: 4px ridge white;
   padding: 10px;
 }
 
 #main {
   flex: 1;
-  background: #f5f5dc;
+  background: #ffffcc;
   padding: 20px;
 }
 
 .button {
   background: #e0e0e0;
-  border: 2px outset white;
-  margin-bottom: 6px;
-  padding: 6px;
+  border: 3px outset white;
+  margin-bottom: 8px;
+  padding: 8px;
   text-align: center;
   cursor: pointer;
   font-weight: bold;
-}
-
-.button:hover {
-  background: #d0d0ff;
 }
 
 .blink {
@@ -56,6 +52,13 @@ body {
 }
 
 @keyframes blink { 50% { opacity: 0; } }
+
+.box {
+  background: white;
+  border: 2px inset #999;
+  padding: 10px;
+  margin-top: 15px;
+}
 
 .slide-wrapper {
   background: #999;
@@ -100,13 +103,6 @@ body {
 .nav-bar {
   display: flex;
   justify-content: space-between;
-}
-
-.nav-btn {
-  padding: 6px 12px;
-  border: 2px outset white;
-  background: #e0e0e0;
-  cursor: pointer;
 }
 
 #errorScreen {
@@ -162,23 +158,23 @@ body {
   cursor: pointer;
   text-align: center;
 }
+
+.hidden { display: none; }
+
 </style>
 </head>
 
 <body>
 
-<div id="banner">
-THE UNKNOT PROGRAM<br>
-<small>Helping you think clearly, together.</small>
-</div>
+<div id="banner">THE UNKNOT PROGRAM</div>
 
 <div id="container">
 
 <div id="sidebar">
-<div class="button">Home</div>
-<div class="button">About</div>
+<div class="button" onclick="goHome()">Home</div>
+<div class="button" onclick="showAbout()">About</div>
 <div class="button" onclick="startSlides()"><span class="blink">NEW</span> Begin Learning</div>
-<div class="button">Progress</div>
+<div class="button" onclick="showProgress()">Progress</div>
 <div class="button" onclick="termsPage()">Terms</div>
 </div>
 
@@ -190,6 +186,10 @@ Welcome to The Unknot Program.<br><br>
 Click the tabs on the left for more information. 
 </p>
 
+
+</div>
+
+</div>
 
 <div id="errorScreen">
 <h1>STOP: 0x00034F SYSTEM MISALIGNMENT</h1>
@@ -210,7 +210,6 @@ Click the tabs on the left for more information.
 
 <script>
 let slideIndex = 0;
-let spam = 0;
 
 function startSlides() {
   slideIndex = 0;
@@ -219,13 +218,66 @@ function startSlides() {
 
 function showSlide() {
   const slides = [
-`<div class="slide-container"><div class="slide"><h2>Understanding Thought</h2><div class="slide-content"><div class="slide-text"><ul><li>Thoughts can become disorganized</li><li>Disorganization reduces clarity</li><li>Clarity improves outcomes</li></ul></div><img src="brain1.gif"></div><button class="nav-btn" onclick="nextSlide()">Next</button></div></div>`,
+`<div class="slide-wrapper"><div class="slide">
+<h2>Understanding Thought</h2>
+<div class="slide-content">
+<div class="slide-text">
+<ul>
+<li>Thoughts can become disorganized</li>
+<li>Disorganization reduces clarity</li>
+<li>Clarity improves outcomes</li>
+</ul>
+</div>
+<div class="slide-image">
+<img src="brain1.gif"><img src="spiral.gif">
+</div>
+</div>
+<div class="nav-bar"><span>1 / 4</span><button onclick="nextSlide()">Next</button></div>
+</div></div>`,
 
-`<div class="slide-container"><div class="slide"><h2>Reducing Strain</h2><div class="slide-content"><div class="slide-text"><ul><li>Too many thoughts create pressure</li><li>Pressure creates discomfort</li><li>Reducing thought reduces strain</li></ul></div><img src="brain2.gif"></div><button class="nav-btn" onclick="nextSlide()">Next</button></div></div>`,
+`<div class="slide-wrapper"><div class="slide">
+<h2>Reducing Strain</h2>
+<div class="slide-content">
+<div class="slide-text">
+<ul>
+<li>Too many thoughts create pressure</li>
+<li>Pressure creates discomfort</li>
+<li>Reducing thought reduces strain</li>
+</ul>
+</div>
+<div class="slide-image">
+<img src="brain2.gif"><img src="static.gif">
+</div>
+</div>
+<div class="nav-bar"><span>2 / 4</span><button onclick="nextSlide()">Next</button></div>
+</div></div>`,
 
-`<div class="slide-container"><div class="slide"><h2>Alignment</h2><div class="slide-content"><div class="slide-text"><ul><li>Aligned thinking is efficient</li><li>Aligned thinking is simple</li><li>You are learning alignment</li></ul></div><img src="organs.gif"></div><button class="nav-btn" onclick="nextSlide()">Next</button></div></div>`,
+`<div class="slide-wrapper"><div class="slide">
+<h2>Alignment</h2>
+<div class="slide-content">
+<div class="slide-text">
+<ul>
+<li>Aligned thinking is efficient</li>
+<li>Aligned thinking is simple</li>
+<li>You are learning alignment</li>
+</ul>
+</div>
+<div class="slide-image">
+<img src="organs.gif"><img src="grid.gif">
+</div>
+</div>
+<div class="nav-bar"><span>3 / 4</span><button onclick="nextSlide()">Next</button></div>
+</div></div>`,
 
-`<div class="slide-container"><div class="slide"><h2>Notice</h2><ul><li>You continued</li><li>You did not stop</li><li>This matters</li></ul><button class="nav-btn" onclick="triggerError()">Continue</button></div></div>`
+`<div class="slide-wrapper"><div class="slide">
+<h2>Notice</h2>
+<ul>
+<li>You continued</li>
+<li>You did not stop</li>
+<li>This matters</li>
+</ul>
+<div class="nav-bar"><span>4 / 4</span><button onclick="triggerError()">Continue</button></div>
+</div></div>`
 ];
 
   document.getElementById("main").innerHTML = slides[slideIndex];
@@ -246,26 +298,12 @@ function restart() {
 }
 
 function termsPage() {
-  document.getElementById("main").innerHTML = "accept ".repeat(500);
+  document.getElementById("main").innerHTML = "accept ".repeat(300);
 }
 
 function aiRespond(type) {
   let chat = document.getElementById("chat");
-  spam++;
-
-  let response = "";
-
-  if (spam > 6) {
-    response = "You are repeating yourself.";
-  } else if (type === 'start') {
-    response = "Select Begin Learning.";
-  } else if (type === 'safe') {
-    response = "There is no risk in continuing.";
-  } else if (type === 'leave') {
-    response = "Leaving is not required.";
-  } else if (type === 'why') {
-    response = "You chose to be here.";
-  }
+  chat.innerHTML = "";
 
   let bubble = document.createElement("div");
   bubble.className = "bubble";
@@ -273,12 +311,20 @@ function aiRespond(type) {
   chat.appendChild(bubble);
 
   setTimeout(() => {
-    bubble.innerText = response;
-  }, 700);
-
-  chat.scrollTop = chat.scrollHeight;
+    let responses = {
+      start: "Select Begin Learning.",
+      safe: "There is no risk in continuing.",
+      leave: "Leaving is not required.",
+      why: "You chose to be here."
+    };
+    bubble.innerText = responses[type];
+  }, 500);
 }
-  
+
+function toggleAI() {
+  document.getElementById("assistant").classList.toggle("hidden");
+}
+
 function goHome() {
   document.getElementById("main").innerHTML = `
 <h2>Welcome</h2>
@@ -310,6 +356,7 @@ Unknotting is what happens when you stop holding yourself together.
 </div>
 `;
 }
+
 function showAbout() {
   document.getElementById("main").innerHTML = `<h2>About</h2><p>The Unknot Program helps reduce internal strain.</p>`;
 }
@@ -317,7 +364,6 @@ function showAbout() {
 function showProgress() {
   document.getElementById("main").innerHTML = `<h2>Progress</h2><p>Status: Not Started</p>`;
 }
-
 
 </script>
 
