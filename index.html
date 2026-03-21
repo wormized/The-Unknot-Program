@@ -92,7 +92,6 @@ body {
   text-align: center;
 }
 
-/* blinking NEW */
 .blink {
   animation: blink 1s infinite;
   color: red;
@@ -101,21 +100,43 @@ body {
   50% { opacity: 0; }
 }
 
-.slide {
-  border: 4px solid black;
+.slide-container {
+  background: #ddd;
   padding: 20px;
-  text-align: left;
-  background: white;
+  border-radius: 10px;
 }
 
-.slide h2 {
-  text-align: center;
+.slide {
+  background: white;
+  width: 700px;
+  height: 400px;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0 0 10px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.slide-content {
+  display: flex;
+}
+
+.slide-text {
+  flex: 1;
 }
 
 .slide img {
-  float: right;
-  width: 150px;
+  width: 200px;
   margin-left: 10px;
+}
+
+.nav-btn {
+  align-self: flex-end;
+  padding: 6px 12px;
+  border: 2px solid black;
+  background: #e0e0e0;
+  cursor: pointer;
 }
 
 .nav-btn {
