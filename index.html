@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Unknot Program</title>
+
+<style>
+body {
+  background-color: #000080;
+  font-family: "Times New Roman", serif;
+}
+
+#banner {
+  background: linear-gradient(to right, #c0c0c0, #ffccff);
+  border: 3px outset white;
+  padding: 10px;
+  text-align: center;
+  font-size: 26px;
+  color: black;
+}
+
+#container {
+  display: flex;
+}
+
+#sidebar {
+  width: 180px;
+  background: #c0c0c0;
+  border: 3px outset white;
+  padding: 10px;
+}
+
+#main {
+  flex: 1;
+  background: #fffff0;
+  border: 3px inset gray;
+  padding: 15px;
+}
+
+.button {
+  background: #e0e0e0;
+  border: 2px outset white;
+  margin-bottom: 6px;
+  padding: 6px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.button:hover {
+  background: #d0d0ff;
+}
+
+.box {
+  border: 2px inset gray;
+  padding: 10px;
+  margin-top: 10px;
+  background: #ffffff;
+}
+
+#assistant {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 220px;
+  background: #c0c0c0;
+  border: 3px outset white;
+  font-size: 12px;
+}
+
+#assistant-header {
+  background: purple;
+  color: white;
+  padding: 3px;
+  font-weight: bold;
+}
+
+#chat {
+  height: 100px;
+  overflow-y: auto;
+  background: white;
+  padding: 5px;
+  border: 2px inset gray;
+}
+
+.option {
+  background: #e0e0e0;
+  border: 1px outset white;
+  margin: 3px;
+  padding: 3px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* blinking NEW */
+.blink {
+  animation: blink 1s infinite;
+  color: red;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.slide {
+  border: 4px solid black;
+  padding: 20px;
+  text-align: left;
+  background: white;
+}
+
+.slide h2 {
+  text-align: center;
+}
+
+.slide img {
+  float: right;
+  width: 150px;
+  margin-left: 10px;
+}
+
+.nav-btn {
+  margin-top: 15px;
+  padding: 6px;
+  border: 2px outset white;
+  background: #e0e0e0;
+  cursor: pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="banner">
+THE UNKNOT PROGRAM<br>
+<small>Helping you think clearly, together.</small>
+</div>
+
+<div id="container">
+
+<div id="sidebar">
+<div class="button">Home</div>
+<div class="button">About</div>
+<div class="button" onclick="startLearning()"><span class="blink">NEW</span> Begin Learning</div>
+<div class="button">Progress</div>
+<div class="button" onclick="termsPage()">Terms</div>
+</div>
+
+<div id="main">
+
+<h2>Welcome</h2>
+<p>
+Welcome to The Unknot Program.
+
+This training system is designed to help reduce internal strain and improve clarity through structured thinking.
+
+Independent thought can create strain. We help reduce that.
+
+Most users begin with uncertainty. This is expected.
+</p>
+
+<div class="box">
+<b>Program Statement</b><br>
+Unknotting is what happens when you stop holding yourself together.
+</div>
+
+<div class="box">
+<b>Statistics</b>
+<ul>
+<li>98.7% of users reported improved clarity</li>
+<li>82% reduction in internal cognitive strain</li>
+<li>91% continued beyond initial hesitation</li>
+</ul>
+</div>
+
+<div class="box">
+<b>Join Program</b><br>
+<input type="text" placeholder="Enter Email">
+<button>Join</button>
+</div>
+
+</div>
+</div>
+
+<div id="assistant">
+<div id="assistant-header">Assist Unit</div>
+<div id="chat">Hello. I am Assist Unit.<br>Would you like help starting?</div>
+<div class="option" onclick="respond('yes')">Yes</div>
+<div class="option" onclick="respond('no')">Not now</div>
+</div>
+
+<script>
+let slideIndex = 0;
+
+function respond(choice) {
+  let chat = document.getElementById("chat");
+
+  if (choice === 'yes') {
+    chat.innerHTML += "<br><br>Beginning is recommended. You are ready.";
+  } else {
+    chat.innerHTML += "<br><br>You may wait. Most do not.";
+  }
+}
+
+function startLearning() {
+  document.getElementById("main").innerHTML = `
+  <h2>Module 1: Understanding Thought</h2>
+  <p>
+  Thoughts can become disorganized when too many are held at once.<br><br>
+  Disorganization creates strain.<br><br>
+  Structure improves clarity.
+  </p>
+  <button onclick="startSlides()">Start Guided Alignment</button>
+  `;
+}
+
+function startSlides() {
+  slideIndex = 0;
+  showSlide();
+}
+
+function showSlide() {
+  const slides = [
+
+`<div class="slide">
+<h2>Understanding Thought</h2>
+<img src="PUT_IMAGE_HERE">
+<ul>
+<li>Thoughts can become tangled</li>
+<li>Tangled thoughts reduce clarity</li>
+<li>Clarity is necessary for improvement</li>
+</ul>
+<button class="nav-btn" onclick="nextSlide()">Next</button>
+</div>`,
+
+`<div class="slide">
+<h2>Reducing Strain</h2>
+<img src="PUT_IMAGE_HERE">
+<ul>
+<li>Multiple thoughts increase pressure</li>
+<li>Pressure creates discomfort</li>
+<li>Reducing thought reduces discomfort</li>
+</ul>
+<button class="nav-btn" onclick="nextSlide()">Next</button>
+</div>`,
+
+`<div class="slide">
+<h2>Alignment</h2>
+<img src="PUT_IMAGE_HERE">
+<ul>
+<li>Aligned thinking is efficient</li>
+<li>Aligned thinking is simple</li>
+<li>You are learning alignment</li>
+</ul>
+<button class="nav-btn" onclick="nextSlide()">Next</button>
+</div>`,
+
+`<div class="slide">
+<h2>Progress</h2>
+<ul>
+<li>You continued</li>
+<li>You did not stop</li>
+<li>This indicates readiness</li>
+</ul>
+<button class="nav-btn" onclick="nextSlide()">Next</button>
+</div>`,
+
+`<div class="slide">
+<h2>Notice</h2>
+<ul>
+<li>You are still here</li>
+<li>You chose to continue</li>
+<li>This matters</li>
+</ul>
+<button class="nav-btn" onclick="nextSlide()">Continue</button>
+</div>`
+
+];
+
+  if (slideIndex < slides.length) {
+    document.getElementById("main").innerHTML = slides[slideIndex];
+  } else {
+    crash();
+  }
+}
+
+function nextSlide() {
+  slideIndex++;
+  showSlide();
+}
+
+function crash() {
+  document.getElementById("main").innerHTML = `
+  <h2>SYSTEM MISALIGNMENT DETECTED</h2>
+  <p>Too many active thoughts.</p>
+  <button onclick="realign()">REALIGN</button>
+  `;
+}
+
+function realign() {
+  document.body.innerHTML = `<h1 style="color:red; text-align:center;">RESTART REQUIRED</h1>`;
+}
+
+function termsPage() {
+  document.getElementById("main").innerHTML = `<p>${"accept ".repeat(500)}</p>`;
+}
+
+</script>
+
+</body>
+</html>
