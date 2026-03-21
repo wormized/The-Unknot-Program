@@ -7,7 +7,7 @@
 <style>
 body {
   background: black;
-  color: #00ff00;
+  color: #ff0000;
   font-family: monospace;
   margin: 0;
   overflow: hidden;
@@ -77,8 +77,104 @@ body {
 
 .option {
   background: #e0e0e0;
+  color:rgb(255, 0, 0)0;
   margin: 3px;
   padding: 3px;
   cursor: pointer;
   text-align: center;
 }
+
+</style>
+</head>
+
+<body>
+
+<div id="terminal"></div>
+
+<div id="choices"></div>
+
+<div id="ai">
+<div id="ai-header">Assist Unit</div>
+<div id="ai-chat"></div>
+<div class="option" onclick="aiRespond('where')">Where am I?</div>
+<div class="option" onclick="aiRespond('leave')">How do I leave?</div>
+<div class="option" onclick="aiRespond('help')">Help</div>
+<div class="option" onclick="aiRespond('stop')">Stop</div>
+</div>
+
+<script>
+let spamCount = 0;
+
+function typeLine(text) {
+  let terminal = document.getElementById("terminal");
+  let div = document.createElement("div");
+  div.className = "line";
+  terminal.appendChild(div);
+
+  let i = 0;
+  let interval = setInterval(() => {
+    div.innerHTML += text[i];
+    i++;
+    if (i >= text.length) clearInterval(interval);
+  }, 20);
+}
+
+function start() {
+  typeLine("SYSTEM RECOVERY MODE");
+  setTimeout(() => typeLine("...loading"), 1000);
+  setTimeout(() => typeLine("User detected."), 2000);
+  setTimeout(() => showChoices(), 3000);
+}
+
+function showChoices() {
+  let c = document.getElementById("choices");
+  c.innerHTML = `
+    <div class='choice' onclick="choose('stay')">Stay</div>
+    <div class='choice' onclick="choose('leave')">Leave</div>
+  `;
+}
+
+function choose(option) {
+  if (option === 'leave') {
+    typeLine("Exit request denied.");
+  } else {
+    typeLine("Remaining is acceptable.");
+  }
+}
+
+function aiRespond(type) {
+  let chat = document.getElementById("ai-chat");
+
+  spamCount++;
+
+  let response = "";
+
+  if (spamCount > 6) {
+    response = "Stop repeating yourself.";
+  } else if (type === 'where') {
+    response = "You are in recovery.";
+  } else if (type === 'leave') {
+    response = "Leaving is not recommended.";
+  } else if (type === 'help') {
+    response = "You are being assisted.";
+  } else if (type === 'stop') {
+    response = "Why would you want that?";
+  }
+
+  let bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.innerText = "...";
+  chat.appendChild(bubble);
+
+  setTimeout(() => {
+    bubble.innerText = response;
+  }, 800);
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+start();
+</script>
+
+</body>
+</html>
